@@ -1,0 +1,23 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  retail-app:
+    # **NECESSARY CHANGE**: Use the "build" context to build the Dockerfile in the current directory
+    build: .
+    container_name: retail_analytics_app
+    ports:
+      - "8501:8501"
+    # **NECESSARY CHANGE**: Use env_file to securely pass secrets from a .env file
+    env_file:
+      - .env
+    volumes:
+      # Mount the application directory for live code changes during development
+      - .:/app
+    # Add a healthcheck to ensure the service is running correctly
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

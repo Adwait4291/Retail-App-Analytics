@@ -10,8 +10,12 @@ from datetime import datetime
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import logging
-from config import PRESERVE_HASH_IN_PROCESSED_DATA
-
+try:
+    # Try local import first (when running from src directory)
+    from config import PRESERVE_HASH_IN_PROCESSED_DATA
+except ImportError:
+    # Fall back to absolute import (when running from project root or in Docker)
+    from src.config import PRESERVE_HASH_IN_PROCESSED_DATA
 # Set up logging
 logging.basicConfig(level=logging.INFO, 
                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
