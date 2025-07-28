@@ -1,0 +1,25 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Install system dependencies needed for your ML packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Upgrade pip and install requirements
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Set common environment variables
+ENV PYTHONPATH=/app
+ENV DOCKER_CONTAINER=true
+
+# Create a non-root user for better security (optional but recommended)
+RUN useradd --create-home --shell /bin/bash app && \
+    chown -R app:app /app
+USER app

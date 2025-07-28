@@ -1,0 +1,29 @@
+FROM retail-ml-base:latest
+
+# Switch to root temporarily to create directories and copy files
+USER root
+
+# Copy source code and .env file with proper ownership
+COPY --chown=app:app app/ /app/app/
+COPY --chown=app:app src/ /app/src/
+COPY --chown=app:app .env /app/.env
+
+# Create directory for models with proper permissions
+RUN mkdir -p /app/models && \
+    chown -R app:app /app/models
+
+# Switch back to app user
+USER app
+
+# Set environment variables
+ENV MODEL_DIR=/app/models
+
+# Expose Streamlit port
+EXPOSE 8501
+
+# Add health check for Streamlit
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8501/_stcore/health || exit 1
+
+# Command to run Streamlit app with proper configuration
+CMD streamlit run app/streamlit.py --server.port=${PORT:-8501} --server.address=0.0.0.0

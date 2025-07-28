@@ -32,7 +32,7 @@ if is_docker:
     MODEL_DIR = os.environ.get("MODEL_DIR", "/app/models")
     logger.info("Running in Docker environment, using path: %s", MODEL_DIR)
 else:
-    MODEL_DIR = "../models"
+    MODEL_DIR = "C:\Users\hp\Desktop\Retail-App-Analytics\src\models"
     logger.info("Running in local environment, using path: %s", MODEL_DIR)
 
 CURRENT_TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
