@@ -1,0 +1,47 @@
+node_modules/
+
+vendor/
+
+__pycache__/
+
+venv/ or .venv/
+
+*.class
+
+*.o
+
+*.pyc
+
+build/
+
+dist/
+
+target/
+
+Log Files and Temporary Files:
+
+*.log
+
+*.tmp
+
+*.bak
+
+Operating System and IDE specific files:
+
+.DS_Store (macOS)
+
+Thumbs.db (Windows)
+
+.idea/ (JetBrains IDEs)
+
+.vscode/ (unless you want to share specific settings)
+
+.project
+
+.settings/
+
+.env
+
+config.json (if it contains secrets)
+
+secrets.yml

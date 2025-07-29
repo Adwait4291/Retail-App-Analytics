@@ -1,51 +1,45 @@
-# Defines the services (containers) that make up your application.
-services:
-  # Service to build the base image with common dependencies.
-  # This must be built before the pipeline and streamlit services.
-  base:
-    build:
-      context: .
-      dockerfile: Dockerfile.base # Uses the Dockerfile for the base image.
-    image: retail-ml-base:latest # Tags the built image so other services can use it.
+version: '3.8'
 
-  # Service for the data processing and model training pipeline.
+services:
   ml-pipeline:
     build:
       context: .
       dockerfile: Dockerfile.pipeline
     container_name: retail_24-ml-pipeline-1
-    # This service depends on the 'base' image being built and mongodb being ready.
-    depends_on:
-      - base
-      - mongodb
     volumes:
-      - ./src:/app/src # Mounts source code for easy development
-      - ./data:/app/data # Mounts data directory
-      - models:/app/models # Mounts a shared volume for models
-    env_file:
-      - ./.env # Loads environment variables from the .env file.
+      - ./data:/app/data
+      - models:/app/models
+    environment:
+      - DOCKER_CONTAINER=true
+      - MODEL_DIR=/app/models
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_CLUSTER=${MONGODB_CLUSTER}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+    depends_on:
+      - mongodb
     restart: unless-stopped
 
-  # Service for the Streamlit web application.
   streamlit-app:
     build:
       context: .
       dockerfile: Dockerfile.streamlit
     container_name: retail_24-streamlit-app-1
-    # This service depends on the 'base' image being built and mongodb being ready.
-    depends_on:
-      - base
-      - mongodb
     ports:
-      - "8501:8501" # Exposes the Streamlit port to the host machine.
+      - "8501"
     volumes:
-      - ./src:/app/src # Mounts source code
-      - models:/app/models # Mounts the shared models volume
-    env_file:
-      - ./.env # Loads environment variables.
-    restart: unless-stopped
+      - models:/app/models
+    environment:
+      - DOCKER_CONTAINER=true
+      - MODEL_DIR=/app/models
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_CLUSTER=${MONGODB_CLUSTER}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+    depends_on:
+      - mongodb
+    restart: "no"  # ✅ Changed from "unless-stopped" to prevent restart after successful exit
 
-  # Service for the MongoDB database.
   mongodb:
     image: mongo:latest
     container_name: retail_24-mongodb-1
@@ -53,13 +47,14 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
-    env_file:
-      - ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
     restart: unless-stopped
 
-# Defines the named volumes used by the services for persistent storage.
 volumes:
-  models: # Volume to share trained models between services.
+  models:
     driver: local
-  mongodb_data: # Volume to persist database data.
+  mongodb_data:
     driver: local

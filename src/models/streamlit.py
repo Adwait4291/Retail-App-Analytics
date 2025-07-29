@@ -11,7 +11,9 @@ from dotenv import load_dotenv
 import os
 import json
 from datetime import datetime, timedelta
-import single_prediction
+
+# Corrected import: Use a relative import to find the module in the same directory.
+from . import single_prediction
 
 # Set page configuration
 st.set_page_config(

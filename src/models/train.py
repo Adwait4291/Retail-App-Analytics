@@ -1,4 +1,3 @@
-# train.py
 import os
 import pandas as pd
 import numpy as np
@@ -14,26 +13,21 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score,
-                          roc_auc_score, classification_report, confusion_matrix)
+                             roc_auc_score, classification_report, confusion_matrix)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO,
-                  format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger('retail_ml_training')
 
 # Constants
 MIN_PERFORMANCE_IMPROVEMENT = 0.01  # Minimum improvement in F1 score to accept new model
 
-# Dynamically determine if running in Docker or locally
-is_docker = os.path.exists("/.dockerenv") or os.environ.get("DOCKER_CONTAINER", "false").lower() == "true"
+# Set MODEL_DIR from environment variable. This works in both Docker and local environments
+# without hardcoding paths, which resolves the SyntaxError.
+MODEL_DIR = os.environ.get("MODEL_DIR", "/app/models")
+logger.info("Using model directory: %s", MODEL_DIR)
 
-# Set MODEL_DIR based on environment
-if is_docker:
-    MODEL_DIR = os.environ.get("MODEL_DIR", "/app/models")
-    logger.info("Running in Docker environment, using path: %s", MODEL_DIR)
-else:
-    MODEL_DIR = "C:\Users\hp\Desktop\Retail-App-Analytics\src\models"
-    logger.info("Running in local environment, using path: %s", MODEL_DIR)
 
 CURRENT_TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -106,47 +100,54 @@ def get_active_model_metadata():
        return None
 
 def prepare_data_for_training(df):
-   """Prepare data for model training."""
-   logger.info("Preparing data for model training...")
-   if 'user_id' in df.columns:
-       df = df.drop('user_id', axis=1)
-   if 'record_hash' in df.columns:
-       df = df.drop('record_hash', axis=1)
-   
-   timestamp_columns = [col for col in df.columns if 'timestamp' in col or 'date' in col]
-   if timestamp_columns:
-       logger.info(f"Dropping timestamp-like columns: {timestamp_columns}")
-       df = df.drop(columns=timestamp_columns)
+    """Prepare data for model training."""
+    logger.info("Preparing data for model training...")
+    if 'user_id' in df.columns:
+        df = df.drop('user_id', axis=1)
+    if 'record_hash' in df.columns:
+        df = df.drop('record_hash', axis=1)
+    
+    timestamp_columns = [col for col in df.columns if 'timestamp' in col or 'date' in col]
+    if timestamp_columns:
+        logger.info(f"Dropping timestamp-like columns: {timestamp_columns}")
+        df = df.drop(columns=timestamp_columns)
 
-   object_columns = df.select_dtypes(include=['object']).columns
-   if len(object_columns) > 0:
-       df = df.drop(columns=object_columns)
-       logger.info(f"Dropped non-numeric columns: {object_columns}")
+    object_columns = df.select_dtypes(include=['object']).columns
+    if len(object_columns) > 0:
+        df = df.drop(columns=object_columns)
+        logger.info(f"Dropped non-numeric columns: {object_columns}")
 
-   if df.isnull().sum().sum() > 0:
-       numeric_cols = df.select_dtypes(include=np.number).columns
-       for col in numeric_cols:
-           if df[col].isnull().any():
-               df[col] = df[col].fillna(df[col].median())
-   
-   if 'purchase_24h' not in df.columns:
-       raise ValueError("Target column 'purchase_24h' not found in dataset")
+    if df.isnull().sum().sum() > 0:
+        numeric_cols = df.select_dtypes(include=np.number).columns
+        for col in numeric_cols:
+            if df[col].isnull().any():
+                df[col] = df[col].fillna(df[col].median())
+    
+    if 'purchase_24h' not in df.columns:
+        raise ValueError("Target column 'purchase_24h' not found in dataset")
 
-   X = df.drop('purchase_24h', axis=1)
-   y = df['purchase_24h']
-   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-   
-   num_features = X.select_dtypes(include=np.number).columns.tolist()
-   scaler = StandardScaler().fit(X_train[num_features])
-   
-   X_train.loc[:, num_features] = scaler.transform(X_train[num_features])
-   X_test.loc[:, num_features] = scaler.transform(X_test[num_features])
-   
-   scaling_info = {
-       "scaled_features": num_features,
-       "all_features": X.columns.tolist()
-   }
-   return X_train, X_test, y_train, y_test, scaler, scaling_info
+    X = df.drop('purchase_24h', axis=1)
+    y = df['purchase_24h']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    
+    num_features = X_train.select_dtypes(include=np.number).columns.tolist()
+    scaler = StandardScaler()
+
+    # --- NECESSARY CHANGE to address FutureWarning ---
+    # Create copies to avoid modifying the original DataFrames in-place
+    X_train_scaled = X_train.copy()
+    X_test_scaled = X_test.copy()
+
+    # Fit on training data and transform both train and test data
+    X_train_scaled[num_features] = scaler.fit_transform(X_train_scaled[num_features])
+    X_test_scaled[num_features] = scaler.transform(X_test_scaled[num_features])
+    
+    scaling_info = {
+        "scaled_features": num_features,
+        "all_features": X.columns.tolist()
+    }
+    # Return the modified copies
+    return X_train_scaled, X_test_scaled, y_train, y_test, scaler, scaling_info
 
 def train_random_forest(X_train, y_train):
    """Train a Random Forest model."""
@@ -211,13 +212,11 @@ def save_model_artifacts(model, scaler, model_version, metrics, detailed_metrics
    logger.info(f"Saving new active model version: {model_version}")
    os.makedirs(MODEL_DIR, exist_ok=True)
    
-   # --- NECESSARY CHANGE: Define filenames ---
    model_filename = f"rf_model_{model_version}.pkl"
    scaler_filename = f"scaler_{model_version}.pkl"
    feature_names_filename = f"feature_names_{model_version}.json"
    scaling_info_filename = f"scaling_info_{model_version}.json"
 
-   # --- Build full paths for saving to disk ---
    model_path = os.path.join(MODEL_DIR, model_filename)
    scaler_path = os.path.join(MODEL_DIR, scaler_filename)
    feature_names_path = os.path.join(MODEL_DIR, feature_names_filename)
@@ -243,7 +242,6 @@ def save_model_artifacts(model, scaler, model_version, metrics, detailed_metrics
            {"status": "active"}, {"$set": {"status": "inactive"}}
        )
        
-       # --- NECESSARY CHANGE: Store FILENAMES in database, not paths ---
        metadata = {
            "model_version": model_version,
            "model_type": "RandomForestClassifier",

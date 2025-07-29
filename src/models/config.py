@@ -1,13 +1,11 @@
-# config.py
-
 # src/config.py
 import os
 from pathlib import Path
 
-# Project base directory - finds the project root regardless of where the script is run from
-BASE_DIR = Path(__file__).parent.parent
+# Project base directory - updated to reflect the root directory inside the Docker container.
+BASE_DIR = Path("/app")
 
-# Data directories
+# Data directories - these will now correctly resolve to /app/data/...
 DATA_DIR = os.path.join(BASE_DIR, "data")
 RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
 PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
