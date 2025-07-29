@@ -1,6 +1,14 @@
-version: '3.8'
-
 services:
+  # New service to build the common base image
+  ml-base-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.base # <--- IMPORTANT: Replace with the actual Dockerfile that builds retail-ml-base
+    image: retail-ml-base:latest # <--- IMPORTANT: This tags the image correctly
+    container_name: retail_24-ml-base-builder-1
+    # No ports or volumes needed for a base image builder unless it has specific requirements
+    restart: "no" # This service just builds the image, doesn't need to keep running
+
   ml-pipeline:
     build:
       context: .
@@ -18,6 +26,7 @@ services:
       - MONGODB_DATABASE=${MONGODB_DATABASE}
     depends_on:
       - mongodb
+      - ml-base-builder # <--- IMPORTANT: Add dependency on the base image builder
     restart: unless-stopped
 
   streamlit-app:
@@ -38,7 +47,8 @@ services:
       - MONGODB_DATABASE=${MONGODB_DATABASE}
     depends_on:
       - mongodb
-    restart: "no"  # ✅ Changed from "unless-stopped" to prevent restart after successful exit
+      - ml-base-builder # <--- IMPORTANT: Add dependency on the base image builder
+    restart: "no"
 
   mongodb:
     image: mongo:latest

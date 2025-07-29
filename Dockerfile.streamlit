@@ -1,3 +1,5 @@
+# Dockerfile.streamlit
+
 # Use the pre-built base image with all dependencies installed.
 FROM retail-ml-base:latest
 
@@ -8,9 +10,10 @@ WORKDIR /app
 USER root
 
 # Copy source code with proper ownership.
-COPY --chown=app:app ./src /app/src
+COPY --chown=app:app src/ /app/src/
 
 # Create necessary directories with proper permissions.
+# Streamlit typically only needs /app/models and a general /app/data if it writes anything.
 RUN mkdir -p /app/models /app/data && \
     chown -R app:app /app/models /app/data
 
@@ -20,10 +23,9 @@ USER app
 # Set an environment variable for the model directory path.
 ENV MODEL_DIR=/app/models
 
-# Add a health check to monitor pipeline status.
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD python -c "import sys; sys.exit(0)" || exit 1
+# Expose the port Streamlit runs on.
+EXPOSE 8501
 
-# Command to run when the container starts.
-# This now correctly points to the pipeline script inside the src/models directory.
-CMD ["python", "-m", "src.models.pipeline"]
+# Define the command to run the Streamlit application.
+# This is the crucial correction for the CMD, assuming your Streamlit app is src/streamlit.py
+CMD ["streamlit", "run", "src/streamlit.py", "--server.port=8501", "--server.enableCORS=false"]
