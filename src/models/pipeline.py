@@ -47,8 +47,13 @@ def run_data_processing():
     logger.info("Starting data processing step...")
     
     try:
-        # Use a relative import to find the module in the same directory.
-        from .processing import main as process_main
+        # Use try-except to handle different import paths based on environment
+        try:
+            # Try local import first (when running from src directory)
+            from processing import main as process_main
+        except ImportError:
+            # Fall back to absolute import (when running from project root or in Docker)
+            from src.processing import main as process_main
         
         # Call the main processing function
         process_main()
@@ -67,8 +72,13 @@ def run_model_training():
     logger.info("Starting model training step...")
     
     try:
-        # Use a relative import to find the module in the same directory.
-        from .train import main as train_main
+        # Use try-except to handle different import paths based on environment
+        try:
+            # Try local import first (when running from src directory)
+            from train import main as train_main
+        except ImportError:
+            # Fall back to absolute import (when running from project root or in Docker)
+            from src.train import main as train_main
         
         # Call the main training function
         train_main()

@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/158308405230790693/dc6530f6f27144808e2ce51fc404609c/artifacts
+deleted_time: 1753938346128
+end_time: 1753936841872
+entry_point_name: ''
+experiment_id: '158308405230790693'
+lifecycle_stage: deleted
+run_id: dc6530f6f27144808e2ce51fc404609c
+run_name: illustrious-ray-951
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753936823912
+status: 4
+tags: []
+user_id: hp

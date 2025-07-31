@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/158308405230790693/ab6fd2a542444ce2bf5cef02d3708b1d/artifacts
+deleted_time: 1753935313052
+end_time: 1753928864286
+entry_point_name: ''
+experiment_id: '158308405230790693'
+lifecycle_stage: deleted
+run_id: ab6fd2a542444ce2bf5cef02d3708b1d
+run_name: wistful-snake-478
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753928816610
+status: 3
+tags: []
+user_id: hp

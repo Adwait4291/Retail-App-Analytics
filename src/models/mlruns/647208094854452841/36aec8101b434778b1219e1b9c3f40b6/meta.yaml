@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/647208094854452841/36aec8101b434778b1219e1b9c3f40b6/artifacts
+end_time: 1753938220453
+entry_point_name: ''
+experiment_id: '647208094854452841'
+lifecycle_stage: active
+run_id: 36aec8101b434778b1219e1b9c3f40b6
+run_name: agreeable-cod-228
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753938217299
+status: 3
+tags: []
+user_id: hp

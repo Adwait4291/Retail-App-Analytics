@@ -1,0 +1,10 @@
+artifact_location: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/158308405230790693/models/m-468d65e9c05944b6a25891ee89021c8e/artifacts
+creation_timestamp: 1753936938688
+experiment_id: '158308405230790693'
+last_updated_timestamp: 1753936947469
+model_id: m-468d65e9c05944b6a25891ee89021c8e
+model_type: null
+name: retail24_random_forest_model
+source_run_id: 86e66be7b6f1429f86547964d3cb7a3c
+status: 2
+status_message: null

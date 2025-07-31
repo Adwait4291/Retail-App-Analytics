@@ -11,8 +11,9 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import logging
 
-# Use a relative import because config.py is in the same directory.
-from .config import PRESERVE_HASH_IN_PROCESSED_DATA
+
+from config import PRESERVE_HASH_IN_PROCESSED_DATA
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, 

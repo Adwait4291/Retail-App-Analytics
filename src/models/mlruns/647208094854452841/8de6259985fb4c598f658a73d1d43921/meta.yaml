@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/647208094854452841/8de6259985fb4c598f658a73d1d43921/artifacts
+end_time: 1753937894288
+entry_point_name: ''
+experiment_id: '647208094854452841'
+lifecycle_stage: active
+run_id: 8de6259985fb4c598f658a73d1d43921
+run_name: rare-flea-952
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753937891179
+status: 3
+tags: []
+user_id: hp

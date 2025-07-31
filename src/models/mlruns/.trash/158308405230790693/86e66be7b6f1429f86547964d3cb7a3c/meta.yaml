@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/158308405230790693/86e66be7b6f1429f86547964d3cb7a3c/artifacts
+deleted_time: 1753938346128
+end_time: 1753936950799
+entry_point_name: ''
+experiment_id: '158308405230790693'
+lifecycle_stage: deleted
+run_id: 86e66be7b6f1429f86547964d3cb7a3c
+run_name: skittish-mule-127
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753936932208
+status: 4
+tags: []
+user_id: hp

@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 import time
 from dateutil import parser as date_parser  # Renamed to avoid conflict
 
-# Import configuration using a relative import
-from .config import (
+
+from config import (
     RAW_DATA_DIR, 
     PRODUCTS_COLLECTION, 
     METADATA_COLLECTION,

@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/158308405230790693/bad09942d2434c43b67ba329697b1b9a/artifacts
+deleted_time: 1753938346128
+end_time: 1753935123426
+entry_point_name: ''
+experiment_id: '158308405230790693'
+lifecycle_stage: deleted
+run_id: bad09942d2434c43b67ba329697b1b9a
+run_name: adaptable-midge-131
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753935119118
+status: 3
+tags: []
+user_id: hp

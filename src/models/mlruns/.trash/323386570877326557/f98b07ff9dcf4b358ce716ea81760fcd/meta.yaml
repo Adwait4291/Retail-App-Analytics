@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/323386570877326557/f98b07ff9dcf4b358ce716ea81760fcd/artifacts
+deleted_time: 1753914921877
+end_time: 1753913749480
+entry_point_name: ''
+experiment_id: '323386570877326557'
+lifecycle_stage: deleted
+run_id: f98b07ff9dcf4b358ce716ea81760fcd
+run_name: dapper-whale-180
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753913735776
+status: 3
+tags: []
+user_id: hp
