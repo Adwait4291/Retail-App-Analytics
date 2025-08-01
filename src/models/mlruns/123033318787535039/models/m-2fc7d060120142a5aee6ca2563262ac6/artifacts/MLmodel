@@ -1,0 +1,22 @@
+artifact_path: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/models/m-2fc7d060120142a5aee6ca2563262ac6/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+mlflow_version: 3.1.4
+model_id: m-2fc7d060120142a5aee6ca2563262ac6
+model_size_bytes: 3141217
+model_uuid: m-2fc7d060120142a5aee6ca2563262ac6
+prompts: null
+run_id: 16171d08c0574035ad486c606b6d4d03
+utc_time_created: '2025-07-31 20:56:46.555255'

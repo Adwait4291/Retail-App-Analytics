@@ -1,0 +1,14 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/559486c8c28a4b1f992f7528d963fd1f/artifacts
+end_time: 1753995172797
+entry_point_name: ''
+experiment_id: '123033318787535039'
+lifecycle_stage: active
+run_id: 559486c8c28a4b1f992f7528d963fd1f
+run_name: delicate-ram-979
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753995159075
+status: 3
+tags: []
+user_id: hp

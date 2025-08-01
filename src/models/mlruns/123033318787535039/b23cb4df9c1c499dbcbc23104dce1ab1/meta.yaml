@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/b23cb4df9c1c499dbcbc23104dce1ab1/artifacts
+deleted_time: 1753995507234
+end_time: 1753993585124
+entry_point_name: ''
+experiment_id: '123033318787535039'
+lifecycle_stage: deleted
+run_id: b23cb4df9c1c499dbcbc23104dce1ab1
+run_name: puzzled-bee-993
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753993572759
+status: 4
+tags: []
+user_id: hp

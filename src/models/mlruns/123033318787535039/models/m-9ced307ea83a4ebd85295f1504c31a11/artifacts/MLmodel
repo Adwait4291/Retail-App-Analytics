@@ -1,0 +1,66 @@
+artifact_path: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/models/m-9ced307ea83a4ebd85295f1504c31a11/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+is_signature_from_type_hint: false
+mlflow_version: 3.1.4
+model_id: m-9ced307ea83a4ebd85295f1504c31a11
+model_size_bytes: 2864993
+model_uuid: m-9ced307ea83a4ebd85295f1504c31a11
+prompts: null
+run_id: 02e69456400b41f18fb2f4fd307e768e
+signature:
+  inputs: '[{"type": "double", "name": "added_to_wishlist", "required": true}, {"type":
+    "double", "name": "age", "required": true}, {"type": "double", "name": "platform",
+    "required": true}, {"type": "double", "name": "session_count", "required": true},
+    {"type": "double", "name": "total_screens_viewed", "required": true}, {"type":
+    "double", "name": "used_search_feature", "required": true}, {"type": "double",
+    "name": "wrote_review", "required": true}, {"type": "double", "name": "hour",
+    "required": true}, {"type": "double", "name": "dayofweek", "required": true},
+    {"type": "double", "name": "is_weekend", "required": true}, {"type": "double",
+    "name": "productlist", "required": true}, {"type": "double", "name": "productdetail",
+    "required": true}, {"type": "double", "name": "categorybrowse", "required": true},
+    {"type": "double", "name": "search", "required": true}, {"type": "double", "name":
+    "shoppingcart", "required": true}, {"type": "double", "name": "checkout", "required":
+    true}, {"type": "double", "name": "paymentmethods", "required": true}, {"type":
+    "double", "name": "deliveryoptions", "required": true}, {"type": "double", "name":
+    "wishlist", "required": true}, {"type": "double", "name": "reviews", "required":
+    true}, {"type": "double", "name": "promotions", "required": true}, {"type": "double",
+    "name": "account", "required": true}, {"type": "double", "name": "addressbook",
+    "required": true}, {"type": "double", "name": "ordertracking", "required": true},
+    {"type": "double", "name": "shopping_count", "required": true}, {"type": "double",
+    "name": "cart_count", "required": true}, {"type": "double", "name": "engagement_count",
+    "required": true}, {"type": "double", "name": "account_count", "required": true},
+    {"type": "double", "name": "other_screens", "required": true}, {"type": "double",
+    "name": "engagement_score", "required": true}, {"type": "double", "name": "screen_diversity",
+    "required": true}, {"type": "double", "name": "purchase_intent", "required": true},
+    {"type": "double", "name": "region_asia pacific", "required": true}, {"type":
+    "double", "name": "region_europe", "required": true}, {"type": "double", "name":
+    "region_latin america", "required": true}, {"type": "double", "name": "region_middle
+    east", "required": true}, {"type": "double", "name": "region_north america", "required":
+    true}, {"type": "double", "name": "channel_email", "required": true}, {"type":
+    "double", "name": "channel_organic search", "required": true}, {"type": "double",
+    "name": "channel_paid search", "required": true}, {"type": "double", "name": "channel_referral",
+    "required": true}, {"type": "double", "name": "channel_social media", "required":
+    true}, {"type": "double", "name": "age_group_adult", "required": true}, {"type":
+    "double", "name": "age_group_senior", "required": true}, {"type": "double", "name":
+    "age_group_young", "required": true}, {"type": "double", "name": "user_type_browser",
+    "required": true}, {"type": "double", "name": "user_type_buyer", "required": true},
+    {"type": "double", "name": "user_type_power user", "required": true}, {"type":
+    "double", "name": "app_major_version", "required": true}, {"type": "double", "name":
+    "version_score", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-07-31 20:31:55.796153'

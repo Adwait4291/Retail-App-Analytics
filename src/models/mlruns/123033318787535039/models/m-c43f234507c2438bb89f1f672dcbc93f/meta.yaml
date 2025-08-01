@@ -1,0 +1,10 @@
+artifact_location: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/models/m-c43f234507c2438bb89f1f672dcbc93f/artifacts
+creation_timestamp: 1753992067368
+experiment_id: '123033318787535039'
+last_updated_timestamp: 1753992108102
+model_id: m-c43f234507c2438bb89f1f672dcbc93f
+model_type: null
+name: model
+source_run_id: d19bed5cdb8d4b909a61bfab0914b5d0
+status: 2
+status_message: null

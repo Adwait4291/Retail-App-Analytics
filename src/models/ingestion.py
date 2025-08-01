@@ -1,3 +1,4 @@
+# src/ingestion.py
 import pandas as pd
 import os
 import hashlib
@@ -7,7 +8,7 @@ from dotenv import load_dotenv
 import time
 from dateutil import parser as date_parser  # Renamed to avoid conflict
 
-
+# Import configuration
 from config import (
     RAW_DATA_DIR, 
     PRODUCTS_COLLECTION, 

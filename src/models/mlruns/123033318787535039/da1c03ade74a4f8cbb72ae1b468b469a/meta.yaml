@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/da1c03ade74a4f8cbb72ae1b468b469a/artifacts
+deleted_time: 1753995507221
+end_time: 1753993499322
+entry_point_name: ''
+experiment_id: '123033318787535039'
+lifecycle_stage: deleted
+run_id: da1c03ade74a4f8cbb72ae1b468b469a
+run_name: orderly-goose-1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753993482977
+status: 4
+tags: []
+user_id: hp

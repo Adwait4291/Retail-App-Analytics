@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/caaae2ee56a949bebf6edf75d33568ac/artifacts
+deleted_time: 1753995507209
+end_time: 1753992404512
+entry_point_name: ''
+experiment_id: '123033318787535039'
+lifecycle_stage: deleted
+run_id: caaae2ee56a949bebf6edf75d33568ac
+run_name: placid-bee-514
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753992389421
+status: 3
+tags: []
+user_id: hp

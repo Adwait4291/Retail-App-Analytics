@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/b4bb63ccf7b8453d9c7e9ed9d469659b/artifacts
+deleted_time: 1753995507190
+end_time: 1753991288648
+entry_point_name: ''
+experiment_id: '123033318787535039'
+lifecycle_stage: deleted
+run_id: b4bb63ccf7b8453d9c7e9ed9d469659b
+run_name: brawny-moth-453
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753991288584
+status: 3
+tags: []
+user_id: hp

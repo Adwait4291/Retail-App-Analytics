@@ -1,0 +1,15 @@
+artifact_uri: file:C:/Users/hp/Desktop/Retail-App-Analytics/src/models/mlruns/123033318787535039/943a72b43a78410dab36c96581584232/artifacts
+deleted_time: 1753995507235
+end_time: 1753993725944
+entry_point_name: ''
+experiment_id: '123033318787535039'
+lifecycle_stage: deleted
+run_id: 943a72b43a78410dab36c96581584232
+run_name: luminous-donkey-30
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753993707871
+status: 4
+tags: []
+user_id: hp

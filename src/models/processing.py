@@ -10,14 +10,15 @@ from datetime import datetime
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import logging
-
-
-from config import PRESERVE_HASH_IN_PROCESSED_DATA
-
-
+try:
+    # Try local import first (when running from src directory)
+    from config import PRESERVE_HASH_IN_PROCESSED_DATA
+except ImportError:
+    # Fall back to absolute import (when running from project root or in Docker)
+    from src.config import PRESERVE_HASH_IN_PROCESSED_DATA
 # Set up logging
 logging.basicConfig(level=logging.INFO, 
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+                   format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger('retail_pipeline')
 
 # Constants
@@ -431,7 +432,7 @@ def process_retail_data(df):
     # Create screen diversity score
     df_processed['screen_diversity'] = (
         df_processed[['shopping_count', 'cart_count', 
-                      'engagement_count', 'account_count']].gt(0).sum(axis=1)
+                     'engagement_count', 'account_count']].gt(0).sum(axis=1)
     )
     
     # Create purchase intent score

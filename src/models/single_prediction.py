@@ -70,30 +70,34 @@ def get_active_model_artifacts():
             logger.error("No active model found in database")
             return None, None, None, None
         
-        # --- NECESSARY CHANGE: Read filenames from DB and build full paths locally ---
+        model_version = active_model['model_version']
         
-        # Load model
-        model_filename = active_model['model_filename']
-        model_path = os.path.join(MODEL_DIR, model_filename)
+        # Load model - fix path for Docker environment
+        model_path = active_model['model_path']
+        if is_docker and model_path.startswith('../models/'):
+            model_path = model_path.replace('../models/', '/app/models/')
         logger.info(f"Loading model from: {model_path}")
         model = joblib.load(model_path)
         
-        # Load scaler
-        scaler_filename = active_model['scaler_filename']
-        scaler_path = os.path.join(MODEL_DIR, scaler_filename)
+        # Load scaler - fix path for Docker environment  
+        scaler_path = active_model['scaler_path']
+        if is_docker and scaler_path.startswith('../models/'):
+            scaler_path = scaler_path.replace('../models/', '/app/models/')
         logger.info(f"Loading scaler from: {scaler_path}")
         scaler = joblib.load(scaler_path)
         
-        # Load feature names
-        feature_names_filename = active_model['feature_names_filename']
-        feature_names_path = os.path.join(MODEL_DIR, feature_names_filename)
+        # Load feature names - fix path for Docker environment
+        feature_names_path = active_model['feature_names_path']
+        if is_docker and feature_names_path.startswith('../models/'):
+            feature_names_path = feature_names_path.replace('../models/', '/app/models/')
         logger.info(f"Loading feature names from: {feature_names_path}")
         with open(feature_names_path, 'r') as f:
             feature_names = json.load(f)
         
-        # Load scaling info
-        scaling_info_filename = active_model['scaling_info_filename']
-        scaling_info_path = os.path.join(MODEL_DIR, scaling_info_filename)
+        # Load scaling info - fix path for Docker environment
+        scaling_info_path = active_model['scaling_info_path']
+        if is_docker and scaling_info_path.startswith('../models/'):
+            scaling_info_path = scaling_info_path.replace('../models/', '/app/models/')
         logger.info(f"Loading scaling info from: {scaling_info_path}")
         with open(scaling_info_path, 'r') as f:
             scaling_info = json.load(f)
@@ -191,9 +195,8 @@ def process_single_record(df, feature_names, scaling_info, scaler):
     
     # User segment processing
     if 'user_segment' in df_processed.columns:
-        df_processed['user_segment'] = df_processed['user_segment'].astype(str) # Ensure it's string
-        df_processed['age_group'] = df_processed['user_segment'].apply(lambda x: x.split()[0] if x else 'Unknown')
-        df_processed['user_type'] = df_processed['user_segment'].apply(lambda x: ' '.join(x.split()[1:]) if x and len(x.split()) > 1 else 'Unknown')
+        df_processed['age_group'] = df_processed['user_segment'].apply(lambda x: x.split()[0])
+        df_processed['user_type'] = df_processed['user_segment'].apply(lambda x: ' '.join(x.split()[1:]))
         
         age_group_dummies = pd.get_dummies(df_processed['age_group'], prefix='age_group')
         user_type_dummies = pd.get_dummies(df_processed['user_type'], prefix='user_type')
@@ -201,12 +204,11 @@ def process_single_record(df, feature_names, scaling_info, scaler):
     
     # App version processing
     if 'app_version' in df_processed.columns:
-        df_processed['app_version'] = df_processed['app_version'].astype(str) # Ensure it's string
-        df_processed['app_major_version'] = df_processed['app_version'].apply(lambda x: int(x.split('.')[0]) if '.' in x else 0)
+        df_processed['app_major_version'] = df_processed['app_version'].apply(lambda x: int(x.split('.')[0]))
         
         # Create version recency score
         df_processed['version_score'] = df_processed['app_version'].apply(
-            lambda x: sum(float(i)/(10**n) for n, i in enumerate(x.split('.'))) if '.' in x else 0
+            lambda x: sum(float(i)/(10**n) for n, i in enumerate(x.split('.')))
         )
     
     # Clean up and prepare final dataset
@@ -301,7 +303,7 @@ def make_single_prediction(feature_dict):
             # Get the values for the current prediction
             for feature in feature_names:
                 if feature in X.columns:
-                    features_df.loc[features_df['feature'] == feature, 'value'] = float(X[feature].values[0])
+                    features_df.loc[features_df['feature'] == feature, 'value'] = X[feature].values[0]
                 else:
                     features_df.loc[features_df['feature'] == feature, 'value'] = 0
             
